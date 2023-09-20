@@ -1,0 +1,83 @@
+<div class="typing-text">
+    <span id="static-text" style="color: white;font-size:34px !important;">We are expert in </span>
+
+  <span id="typed-text"></span>
+  <span id="cursor"></span>
+</div>
+<script>
+const sentences = [
+    "Web Development",
+    "3D Arts",
+    "Logo Animations",
+    "Mobile Apps UI",
+    "Menu Designs",
+    "Logo Portfolio",
+    "Certificate Designs",
+    "Post Designs",
+  ];
+  
+
+  const typedTextElement = document.getElementById("typed-text");
+  const cursorElement = document.getElementById("cursor");
+  let currentSentenceIndex = 0;
+  let currentIndex = 0;
+  let isErasing = false;
+
+  function typeText() {
+    const currentSentence = sentences[currentSentenceIndex];
+
+    if (!isErasing) {
+      if (currentIndex < currentSentence.length) {
+        typedTextElement.textContent += currentSentence.charAt(currentIndex);
+        currentIndex++;
+        setTimeout(typeText, 100); // Typing speed (in milliseconds)
+      } else {
+        // Start erasing
+        isErasing = true;
+        setTimeout(eraseText, 1000); // Delay before erasing (in milliseconds)
+      }
+    } else {
+      if (currentIndex > 0) {
+        typedTextElement.textContent = currentSentence.substring(0, currentIndex - 1);
+        currentIndex--;
+        setTimeout(eraseText, 50); // Erasing speed (in milliseconds)
+      } else {
+        // Move to the next sentence
+        isErasing = false;
+        currentSentenceIndex = (currentSentenceIndex + 1) % sentences.length;
+        setTimeout(typeText, 1000); // Delay before typing the next sentence (in milliseconds)
+      }
+    }
+  }
+
+  function eraseText() {
+    typeText();
+  }
+
+  typeText();
+</script>
+<style>
+  .typing-text {
+    font-size: 42px;
+    font-weight: 600;
+    color: #009CD6;
+    font-family : Roboto;
+  }
+
+  #cursor {
+    display: inline-block;
+    width: 6px;
+    height: 28px;
+    background-color: white;
+    animation: cursor-blink 0.7s infinite;
+  }
+
+  @keyframes cursor-blink {
+    0%, 100% {
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+</style>
